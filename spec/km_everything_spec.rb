@@ -2,6 +2,23 @@ require 'km_everything'
 
 describe KmEverything::KmEvent do
   let(:km_event) { KmEverything::KmEvent.new(controller_name, action_name) }
+  
+  describe "setup with simplest config" do
+    before do
+      KmEverything.event_names = nil
+      KmEverything.events_to_exclude = nil
+      KmEverything.record_every_controller_action = true
+    end
+    
+    context "recording an event" do
+      let(:controller_name) { "users" }
+      let(:action_name) { "show" }
+      
+      it "returns the event" do
+        km_event.event.should == "users#show"
+      end
+    end
+  end
 
   describe "#event" do
     before do
